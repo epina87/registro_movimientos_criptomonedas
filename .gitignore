@@ -1,0 +1,7 @@
+.env
+**_pycache__/
+venv/
+config.py
+data/*.db
+data/*.sqlite
+.vscode/
