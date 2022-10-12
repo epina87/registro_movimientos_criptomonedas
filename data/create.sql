@@ -8,3 +8,5 @@ CREATE TABLE "movimientos" (
 	"cantidad_to"	REAL NOT NULL,
 	PRIMARY KEY("id" AUTOINCREMENT)
 );
+
+

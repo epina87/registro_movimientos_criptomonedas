@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/static/css/pico.css">
     <link rel="stylesheet" href="/static/css/style.css">
+   
     <script src="/static/js/spa.js"></script>
     <title>Registro de movimientos de
         criptomonedas</title>
@@ -21,7 +22,8 @@
     </header>
     <section id="where_covers">
         <article id="movements">
-            <table id="movements_table">
+            
+            <table id="movements_table" class="inactive">
                 <tr>
                     <th>Fecha</th>
                     <th>Hora</th>
@@ -31,11 +33,51 @@
                     <th>Cantidad</th>
                 </tr>
             </table>
+            <span id="mensaje">No se han encontrado movimientos</span>
         </article>
         <article id="investment">
-            
+
+            <button id="btn_business">+</button>   
         </article>
         <article id="business" class="inactive">
+            
+
+            <form action="movements_new" id="business_new">
+                <div class="form_cripto">
+                    From:
+                    <select name="selec_from" id="selec_from">                  
+                    </select>
+                    Q:
+                    <input type="number" name="quantity_from" id="quantity_from"  placeholder="Importe a calcular">  
+                    
+                    
+                    <a title="calculate" href="calculate" id="calculate"><img src="/static/img/calculate.png" alt="calculate" /></a>
+                    <span id="text_error" class="inactive"> error</span>
+
+                </div>
+
+                <div class="to_cripto">
+                    To:
+                    <select name="selec_to" id="selec_to">                  
+                    </select>
+
+                    <table>
+                        <tr>
+                            <th>Q:</th>
+                            <td id="cripto_coin"></td>
+                        </tr>
+                       
+                        <tr>
+                            <th>P.V:</th>
+                            <td id="cripto_total"></td>
+                        </tr>
+                    </table>
+                    
+
+                    <button id="btn_aceptar">Aceptar</button>
+                </div>
+                
+            </form>
             
         </article>
 
