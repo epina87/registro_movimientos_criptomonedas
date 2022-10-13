@@ -1,7 +1,7 @@
 from flask import jsonify,render_template,request
 from registros_cripto import app
-from registros_cripto.models import select_all,select_coins,sale_currency_control
-from registros_cripto.api import Cambio,ModelError
+from registros_cripto.models import select_all,select_coins,sale_currency_control,result_total
+from registros_cripto.api import Cambio,ModelError,TotalCambio
 from config import apiKey
 
 import sqlite3
@@ -36,7 +36,26 @@ def new_movements():
 
 @app.route("/api/v1/status", methods=["GET"])
 def status_movements():
-    pass
+    totalCambio = TotalCambio()
+    try:
+        totalCambio.buscarTodasEuro()  
+
+
+    except ModelError as variable:
+        return return_josn_fail(variable,400)
+
+    try:
+        total = result_total(totalCambio.intercambio_euro)
+        print(total)
+        return jsonify(
+                {
+                    "status": "success",
+                    "data": total
+                    
+                }
+            ) 
+    except sqlite3.Error as e:
+        return return_josn_fail(str(e),400)
 
 @app.route("/api/v1/selec_from", methods=["GET"])
 def selec_from():
@@ -69,16 +88,18 @@ def selec(coin_from,coin_to,q_from):
             tipoCambio = Cambio(coin_from,coin_to)
             try:
                 tipoCambio.actualiza(apiKey)            
-                #mostrarTipoCambio(tipoCambio.tasa)
+                
                 return jsonify(
                 {
-                    "data": {"q":tipoCambio.tasa,"pv":tipoCambio.tasa*quantity_change},
+                    "data": {"q":tipoCambio.tasa,"pv":tipoCambio.tasa*quantity_change,"time":tipoCambio.hora,"date":tipoCambio.fecha},
                     "status": "success"
                 }
             ) 
 
             except ModelError as variable:
                 return return_josn_fail(variable,400)
+            #except:
+            #    return return_josn_fail("No se ha podido establecer la conexión",400)
                 
         else:   
             return return_josn_fail(f"Cantidad insuficiente de {coin_from}, en tu cartera",400)

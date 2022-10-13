@@ -57,6 +57,10 @@ function alta_Movimiento(ev) {
     document.querySelector("#cripto_total").innerHTML = ""
     document.querySelector("#selec_from").innerHTML = ""
     document.querySelector("#selec_to").innerHTML = ""
+    document.querySelector("#text_time").classList.remove("inactive")
+
+    document.querySelector("#text_time").innerHTML = ""
+    document.querySelector("#text_date").innerHTML = ""
 
 
 
@@ -134,6 +138,10 @@ function revisar_Moneda(ev) {
 
             document.querySelector("#cripto_coin").innerHTML = precio_moneda.q.toFixed(8)
             document.querySelector("#cripto_total").innerHTML = precio_moneda.pv.toFixed(8)
+            document.querySelector("#text_time").innerHTML = precio_moneda.time
+            document.querySelector("#text_time").classList.remove("inactive")
+            document.querySelector("#text_date").innerHTML = precio_moneda.date
+            document.querySelector("#text_date").classList.remove("inactive")
             
             
         }
@@ -144,11 +152,20 @@ function revisar_Moneda(ev) {
                 let coment_error = document.querySelector("#text_error")
                 coment_error.classList.remove("inactive")
                 coment_error.innerHTML = monedas_cartera.data
+
+
+                document.querySelector("#cripto_coin").innerHTML = ""
+                document.querySelector("#cripto_total").innerHTML = ""
+           
+                document.querySelector("#text_time").innerHTML = ""
+                document.querySelector("#text_date").innerHTML = ""
+            
             }
 
         }
     }
     peticion.send()
+
 
 
 }
@@ -157,7 +174,30 @@ function revisar_Moneda(ev) {
 
 function nuevo_Movimiento(ev) {
     ev.preventDefault()
-    alert("nuevo")
+
+
+    const url = 'http://localhost:5000/api/v1/status'
+
+    peticion.open("GET", url,true)
+    peticion.onreadystatechange = function(){
+
+        if(this.readyState == 4 && this.status == 200){
+
+            movimientos
+        }
+
+        else{
+            //alert("ERROR")
+            pass
+        } 
+    
+    
+    }
+    peticion.send()
+
+                
+    
+    
 }
 
 

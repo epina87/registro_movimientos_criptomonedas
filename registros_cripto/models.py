@@ -3,6 +3,7 @@ from config import apiKey,monedas,ORIGIN_DATA
 
 
 
+
 def select_all():
     
     conn = sqlite3.connect(ORIGIN_DATA)
@@ -73,4 +74,49 @@ def total_coins_BD(list_coin):
         total+=price[0]
 
     return total
+
+def result_total(totalCambio):
+
+    conn = sqlite3.connect(ORIGIN_DATA)
+    cur = conn.cursor()
+
+    cur.execute("SELECT moneda_from,cantidad_from,moneda_to,cantidad_to from movimientos;")
+    history = cur.fetchall()
+    conn.close()
+    
+    dic_sell =  dictionary(monedas)
+    dic_buy  = dictionary(monedas)
+    
+    for registro in history:       
+        dic_sell[registro[0]] += registro[1] 
+        dic_buy[registro[2]] += registro[3] 
+
+
+    total_sell  = 0 
+    total_buy   = 0 
+    invested    = 0
+    recovered   = 0
+
+
+    for moneda in dic_sell:
+        if moneda != "EUR":
+            total_sell += totalCambio.get(moneda)  * dic_sell.get(moneda)
+            total_buy += totalCambio.get(moneda)  * dic_buy.get(moneda)
+        else:
+            invested += dic_sell.get(moneda)  
+            recovered +=   dic_buy.get(moneda)
+    purchase_value = invested - recovered 
+    Current_value =  total_buy - total_sell
+
+    total = {"invertido":invested,"recuperado":recovered,"valor_compra":purchase_value,"valor_actual":Current_value}
+
+    return total
+    
+
+def dictionary(monedas):
+    dic={}
+    for moneda in monedas:
+        dic[moneda] = 0.0
+    return dic    
+
 
