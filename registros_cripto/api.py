@@ -2,10 +2,8 @@ import requests
 from config import apiKey,monedas
 
 
-
 class ModelError(Exception):
     pass
-
 
 class Cambio:
     def __init__(self,coin_from,coin_to):
@@ -15,30 +13,21 @@ class Cambio:
         self.hora = None
         self.fecha = None
     
-    def actualiza(self,apikey):  
-        '''           
-        r = requests.get("https://rest.coinapi77.io/v1/exchangerate/{}/{}?apikey={}".format(self.coin_from,self.coin_to,apiKey))
+    def actualiza(self):  
+                   
+        r = requests.get("https://rest.coinapi.io/v1/exchangerate/{}/{}?apikey={}".format(self.coin_from,self.coin_to,apiKey))
         resultado = r.json()
-        '''
-        resultado = {
-            "time": "2022-10-13T14:30:53.0000000Z",
-            "asset_id_base": "ETH",
-            "asset_id_quote": "EUR",
-            "rate": 1262.1272954503720082059746699
-            }
-        
-         
-        #if r.status_code == 200: 
-        status_code = 200
-        if status_code == 200:  
+        print(resultado)
+   
+        if r.status_code == 200:  
             self.tasa = resultado["rate"]
             horafecha = resultado["time"]
             self.hora = horafecha[slice(12,19)]
             self.fecha =  horafecha[slice(0,10)]
 
         else:
-            #raise ModelError("{}: {}".format(r.status_code,resultado["error"]))
-            raise ModelError("{}: {}".format(status_code,resultado["error"]))
+            raise ModelError("{}: {}".format(r.status_code,resultado["error"]))
+
 
 class TotalCambio:
     def __init__(self) -> None:

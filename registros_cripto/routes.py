@@ -99,30 +99,33 @@ def selec_from():
 def selec(coin_from,coin_to,q_from):
     if coin_from == coin_to or q_from==0 or q_from=="" or coin_from == "" or coin_to== "":
         return return_josn_fail("Datos Incorrectos",400)
-    else:       
-        sufficient_quantity = sale_currency_control(coin_from)        
+    else:  
+        if coin_from != "EUR":     
+            sufficient_quantity = sale_currency_control(coin_from)        
         try:
             quantity_change = float(q_from)     
         except:
             return return_josn_fail("Cantidad incorrecta, solo valores numericos",400)
 
-        if sufficient_quantity>= quantity_change:
+        if coin_from == "EUR" or sufficient_quantity>= quantity_change:
             
             tipoCambio = Cambio(coin_from,coin_to)
             try:
-                tipoCambio.actualiza(apiKey)            
+                tipoCambio.actualiza()            
                 
                 return jsonify(
                 {
-                    "data": {"q":tipoCambio.tasa*quantity_change,"pv":tipoCambio.tasa,"time":tipoCambio.hora,"date":tipoCambio.fecha},
+                        
+                    "data": {"q":tipoCambio.tasa * quantity_change,"pv":tipoCambio.tasa,"time":tipoCambio.hora,"date":tipoCambio.fecha},
                     "status": "success"
+                    
                 }
             ) 
 
-            #except ModelError as variable:
-            #    return return_josn_fail(variable,400)
-            except:
-                return return_josn_fail("No se ha podido establecer la conexión",400)
+            except ModelError as variable:
+               return return_josn_fail(variable,400)
+            #except:
+            #    return return_josn_fail("No se ha podido establecer la conexión",400)
                 
         else:   
             return return_josn_fail(f"Cantidad insuficiente de {coin_from}, en tu cartera",400)
