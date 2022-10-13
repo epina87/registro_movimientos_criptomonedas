@@ -14,6 +14,18 @@ def select_all():
     resultado = filas_to_diccionario(cur.fetchall(), cur.description)
 
     conn.close()
+    for movimiento in resultado:       
+        if movimiento["moneda_from"] == "EUR":
+           movimiento["cantidad_from"] = round(movimiento["cantidad_from"] ,2) 
+        else:
+            movimiento["cantidad_from"] = round(movimiento["cantidad_from"] ,8)  
+
+        if movimiento["moneda_to"] == "EUR":
+           movimiento["cantidad_to"] = round(movimiento["cantidad_to"] ,2) 
+        else:
+            movimiento["cantidad_to"] = round(movimiento["cantidad_to"] ,8)   
+
+
 
     return resultado
 
@@ -38,8 +50,6 @@ def select_coins():
     '''
     return monedas
 
-
-
 def filas_to_diccionario(filas, columnas):
     resultado = []
     for fila in filas:
@@ -52,7 +62,7 @@ def filas_to_diccionario(filas, columnas):
 
     return resultado
 
-def sale_currency_control(coin_from,q_from):
+def sale_currency_control(coin_from):
     conn = sqlite3.connect(ORIGIN_DATA)
     cur = conn.cursor()
 
@@ -104,11 +114,11 @@ def result_total(totalCambio):
             total_buy += totalCambio.get(moneda)  * dic_buy.get(moneda)
         else:
             invested += dic_sell.get(moneda)  
-            recovered +=   dic_buy.get(moneda)
+            recovered += dic_buy.get(moneda)
     purchase_value = invested - recovered 
     Current_value =  total_buy - total_sell
 
-    total = {"invertido":invested,"recuperado":recovered,"valor_compra":purchase_value,"valor_actual":Current_value}
+    total = {"invertido":round(invested,2),"recuperado":round(recovered,2),"valor_compra":round(purchase_value,8),"valor_actual":round(Current_value,8)}
 
     return total
     
@@ -117,6 +127,30 @@ def dictionary(monedas):
     dic={}
     for moneda in monedas:
         dic[moneda] = 0.0
-    return dic    
+    return dic   
 
+def insert(registro):
+    
+    conn = sqlite3.connect(ORIGIN_DATA)
+    cur = conn.cursor()
+
+    cur.execute("INSERT INTO movimientos (date, time, moneda_from, cantidad_from, moneda_to, cantidad_to) values (?, ?, ?, ?, ?, ?);", (registro))
+    conn.commit()
+    conn.close()
+   
+
+def selec_id(registro):
+    print(registro)
+    conn = sqlite3.connect(ORIGIN_DATA)
+    cur = conn.cursor()
+
+    cur.execute("SELECT id from movimientos  WHERE date= ? AND time=? AND moneda_from=? AND cantidad_from=? AND moneda_to AND cantidad_to=?;",(registro))
+
+    resultado = cur.fetchall()
+
+    conn.close()
+
+    
+
+    return
 
