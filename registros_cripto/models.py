@@ -14,7 +14,8 @@ def select_all():
     resultado = filas_to_diccionario(cur.fetchall(), cur.description)
 
     conn.close()
-    for movimiento in resultado:       
+    for movimiento in resultado:      
+         
         if movimiento["moneda_from"] == "EUR":
            movimiento["cantidad_from"] = round(movimiento["cantidad_from"] ,2) 
         else:
@@ -25,30 +26,32 @@ def select_all():
         else:
             movimiento["cantidad_to"] = round(movimiento["cantidad_to"] ,8)   
 
-
-
     return resultado
 
 def select_coins():
-    '''
+    
     conn = sqlite3.connect(ORIGIN_DATA)
-    cur = conn.cursor()  
-    cur.execute("SELECT moneda_from,cantidad_from,moneda_to,cantidad_to from movimientos order by date,time;")  
+    cur = conn.cursor()
 
-    filas=cur.fetchall()
-    resultado=[]
-    d = {}
-    for fila in filas:
-        print (fila[0])
-        vender = d.get(fila[0])
-        if vender == "":
-            d[fila[0]] = fila[1]
-        
+    cur.execute("SELECT moneda_from,cantidad_from,moneda_to,cantidad_to from movimientos;")
+    history = cur.fetchall()
+    conn.close()
+    
+    dic_sell =  dictionary(monedas)
+    dic_buy  = dictionary(monedas)
 
+    for registro in history:    
+        dic_sell[registro[0]] += registro[1] 
+        dic_buy[registro[2]] += registro[3] 
 
+    monedas_cartera=["EUR"]
 
-    '''
-    return monedas
+    for moneda in dic_sell:
+        if moneda != "EUR":
+            if dic_buy[moneda]>dic_sell[moneda]:
+                monedas_cartera.append(moneda)    
+            
+    return monedas_cartera,monedas
 
 def filas_to_diccionario(filas, columnas):
     resultado = []
@@ -97,7 +100,7 @@ def result_total(totalCambio):
     dic_sell =  dictionary(monedas)
     dic_buy  = dictionary(monedas)
     
-    for registro in history:       
+    for registro in history:    
         dic_sell[registro[0]] += registro[1] 
         dic_buy[registro[2]] += registro[3] 
 
@@ -122,7 +125,6 @@ def result_total(totalCambio):
 
     return total
     
-
 def dictionary(monedas):
     dic={}
     for moneda in monedas:
@@ -139,18 +141,5 @@ def insert(registro):
     conn.close()
    
 
-def selec_id(registro):
-    print(registro)
-    conn = sqlite3.connect(ORIGIN_DATA)
-    cur = conn.cursor()
 
-    cur.execute("SELECT id from movimientos  WHERE date= ? AND time=? AND moneda_from=? AND cantidad_from=? AND moneda_to AND cantidad_to=?;",(registro))
-
-    resultado = cur.fetchall()
-
-    conn.close()
-
-    
-
-    return
 

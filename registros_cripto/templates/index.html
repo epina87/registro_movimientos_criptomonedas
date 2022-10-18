@@ -12,12 +12,9 @@
 
 
 </head>
-<body class = "container">
-    <header>
-        <div class="container">
-            myCRYPTO
-        </div>
-        
+<body class = "container" >
+    <header id="header_crypto" >
+        <h1>myCRYPTO</h1>        
     </header>
     <section id="where_covers">
         <article id="movements">
@@ -72,13 +69,25 @@
                     Q:
                     <input type="number" name="quantity_from" id="quantity_from"  placeholder="Importe a calcular">  
 
-                    <input type="number" name="quantity_from_final" id="quantity_from_final" class="inactive">
+
                     
                     
-                    <a title="calculate" href="calculate" id="calculate"><img src="/static/img/calculate.png" alt="calculate" /></a>
+
+                    <a title="calculate" href="calculate" id="calculate">
+                        <img src="/static/img/calculate.png" alt="calculate" />
+                    </a>
+                    
+
                     <span id="text_error" class="inactive"> error</span>
                     <span id="text_date" class="inactive"></span>&nbsp;&nbsp;
                     <span id="text_time" class="inactive"></span>
+                    <p id="time">
+                        <span id="minutes"></span>  
+                        <span id="seconds"></span> 
+                    </p>
+                    
+                        
+                     
 
                 </div>
 
