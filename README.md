@@ -1,13 +1,13 @@
 # Registro_cripto
 
 ### 1- Instalación de las dependencias, _"requirements.txt"._
-        * -> _pip install -r requirements.txt_
+        * -> pip install -r requirements.txt
 ___        
 
-### 2- Creación base datos con el fichero _"/data/create.sql"_.
-    * -> _sqlite3 datos.db_
-    * sqlite> _.read data/create.sql_
-    * sqlite> _.q_
+### 2- Creación base datos con el fichero _"/data/create.sql"._
+    * -> sqlite3 datos.db
+    * sqlite> .read data/create.sql
+    * sqlite> .q
 ___
 
 ### 3- Modificación del fichero config_template.py
@@ -18,6 +18,6 @@ ___
 ___
 
 ### 4- Modificación del fichero .env_template
-    * a) Modificar FLASK_DEBUG= _"Añadiendo True"_
-    * b) Renombrar el fichero .env_template por .env
+  * a) Modificar FLASK_DEBUG= _"Añadiendo True"_
+  * b) Renombrar el fichero .env_template por .env
 ___
