@@ -3,7 +3,6 @@ from flask import jsonify,render_template,request
 from registros_cripto import app
 from registros_cripto.models import select_all,select_coins,sale_currency_control,result_total,insert
 from registros_cripto.api import Cambio,ModelError,TotalCambio
-from config import apiKey
 from registros_cripto.form import MovimientosForm,error_validadcion_form
 
 from flask_wtf import FlaskForm

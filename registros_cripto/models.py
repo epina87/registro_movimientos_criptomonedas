@@ -1,5 +1,5 @@
 import sqlite3
-from config import apiKey,MONEDAS,ORIGIN_DATA
+from config import MONEDAS,ORIGIN_DATA
 
 
 

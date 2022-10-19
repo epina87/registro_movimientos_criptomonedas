@@ -1,5 +1,5 @@
 import requests
-from config import apiKey,MONEDAS
+from config import APIKEY,MONEDAS
 
 
 class ModelError(Exception):
@@ -16,7 +16,7 @@ class Cambio:
     def actualiza(self): 
         '''
         try:           
-            r = requests.get("https://rest.coinapi.io/v1/exchangerate/{}/{}?apikey={}".format(self.coin_from,self.coin_to,apiKey))
+            r = requests.get("https://rest.coinapi.io/v1/exchangerate/{}/{}?apikey={}".format(self.coin_from,self.coin_to,APIKEY))
         except requests.ConnectionError:
             raise ModelError("Failed to establish a new connection") 
             
@@ -48,9 +48,9 @@ class TotalCambio:
         self.intercambio_euro = {} 
     
     def buscarTodasEuro(self):
-        '''
+        
         try:
-            r = requests.get("https://rest.coinapi.io/v1/exchangerate/EUR?apikey={}".format(apiKey))
+            r = requests.get("https://rest.coinapi.io/v1/exchangerate/EUR?apikey={}".format(APIKEY))
         except requests.ConnectionError:
             raise ModelError("Failed to establish a new connection") 
             
@@ -60,8 +60,8 @@ class TotalCambio:
         
         status_code = 200
         if status_code == 200:
-        
-        #if r.status_code == 200: 
+        '''
+        if r.status_code == 200: 
             tasa_moneda = resultado["rates"]
             for dic_moneda in tasa_moneda:
                 if dic_moneda.get("asset_id_quote") in MONEDAS:
@@ -69,8 +69,8 @@ class TotalCambio:
             
 
         else:
-           # raise ModelError("{}: {}".format(r.status_code,resultado["error"]))
-            raise ModelError("{}: {}".format(status_code,resultado["error"]))
+            raise ModelError("{}: {}".format(r.status_code,resultado["error"]))
+           # raise ModelError("{}: {}".format(status_code,resultado["error"]))
 
 
 def coinapi_pruebas():
