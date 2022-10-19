@@ -12,103 +12,7 @@ selec_from_calculada= ""
 
 
 
-function peticion_todos_handler() {
-    
-    if (this.readyState === 4) {
-        const los_datos = JSON.parse(this.responseText)
-        
-        if (this.status === 200) {
-            
-            const los_datos = JSON.parse(this.responseText)
-            const la_tabla = document.querySelector("#movements_table")
-            const movimientos = los_datos.data
-            const mensaje = document.querySelector("#mensaje")
-            if (movimientos.length == 0){           
-                mensaje.style.display= "block"; 
-                la_tabla.style.display= "none";         
-            }
-            else{
-                clear_tab()
-                mensaje.style.display= "none"; 
-                la_tabla.style.display= "block"; 
-                for (let i=0; i < movimientos.length; i++) {
-                    item = movimientos[i]
-                    const trow = document.createElement("tr")
-    
-                    const tddate = document.createElement("td")
-                    const tdtime = document.createElement("td")
-                    const tdfrom_sale = document.createElement("td")
-                    const tdquantity_sale = document.createElement("td")
-                    const tdfrom_buy = document.createElement("td")
-                    const tdquantity_buy = document.createElement("td")
-    
-                    tddate.innerHTML = item.date
-                    tdtime.innerHTML = item.time
-                    tdfrom_sale.innerHTML = item.moneda_from
-                    tdquantity_sale.innerHTML = item.cantidad_from
-                    tdfrom_buy.innerHTML = item.moneda_to
-                    tdquantity_buy.innerHTML = item.cantidad_to
-    
-                    trow.appendChild(tddate)
-                    trow.appendChild(tdtime)
-                    trow.appendChild(tdfrom_sale)                 
-                    trow.appendChild(tdquantity_sale)
-                    trow.appendChild(tdfrom_buy)
-                    trow.appendChild(tdquantity_buy)
-
-
-                    la_tabla.appendChild(trow)
-                }
-               
-            }
-            
-            
-        } else {
-            
-            error = los_datos.mensaje
-            if (error != "") { 
-                alert(error)
-            }
-            else{
-                alert("Se ha producido un error en la consulta de movimientos")
-            }
-            
-        }
-    }
-}
-
-function clear_tab(){
-    const la_tabla = document.querySelector("#movements_table")
-    la_tabla.innerHTML = ""
-    const trow = document.createElement("tr")
-    
-    const thdate = document.createElement("th")
-    const thtime = document.createElement("th")
-    const thfrom_sale = document.createElement("th")
-    const thquantity_sale = document.createElement("th")
-    const thfrom_buy = document.createElement("th")
-    const thquantity_buy = document.createElement("th")
-
-    thdate.innerHTML = "Fecha"
-    thtime.innerHTML = "Hora"
-    thfrom_sale.innerHTML = "From"
-    thquantity_sale.innerHTML = "Cantidad"
-    thfrom_buy.innerHTML = "From"
-    thquantity_buy.innerHTML = "Cantidad"
-
-    trow.appendChild(thdate)
-    trow.appendChild(thtime)
-    trow.appendChild(thfrom_sale)                 
-    trow.appendChild(thquantity_sale)
-    trow.appendChild(thfrom_buy)
-    trow.appendChild(thquantity_buy)
-
-
-    la_tabla.appendChild(trow)
-
-}
-
-function alta_Movimiento(ev) {
+function mostrar_alta_Movimiento(ev) {
     ev.preventDefault()
 
     clean_calc(["#cripto_coin","#cripto_total","#text_time","#text_date"])  
@@ -158,18 +62,6 @@ function alta_Movimiento(ev) {
     
 }
 
-function combo_monedas(selec,monedas){
-    for (let i=0; i < monedas.length; i++) {
-        item = monedas[i]
-
-        let opt = document.createElement('option')
-        opt.value = item
-        opt.innerHTML = item
-        selec.appendChild(opt)
-            
-    }
-
-}
 
 function revisar_Moneda(ev) {
     ev.preventDefault()
@@ -190,13 +82,13 @@ function revisar_Moneda(ev) {
         
         return        
     }
-    if (!quantity ||quantity == 0){
+    if (!quantity ||quantity <= 0){
         document.querySelector("#text_error").classList.remove("inactive")
-        document.querySelector("#text_error").innerHTML = "La cantidad tiene que ser superior a 0"
-        
+        document.querySelector("#text_error").innerHTML = "La cantidad tiene que ser superior a 0"        
         return        
     }
     
+
     const url = 'http://localhost:5000/api/v1/selec/'+selec_from+'/'+selec_to+'/'+quantity
 
     peticion_calculo.open("GET", url,true)
@@ -233,7 +125,6 @@ function revisar_Moneda(ev) {
             const status = monedas_cartera.status
             
             if (status=="fail"){
-                alert(monedas_cartera.data)
                 document.querySelector("#text_error").classList.remove("inactive")
                 document.querySelector("#text_error").innerHTML = monedas_cartera.mensaje
             }    
@@ -241,12 +132,6 @@ function revisar_Moneda(ev) {
         }
     
     peticion_calculo.send()
-}
-
-function clean_calc(list_id,value=""){    
-    for (let i=0; i < list_id.length; i++) {
-        document.querySelector(list_id[i]).innerHTML = value   
-    }
 }
 
 function nuevo_Movimiento(ev) {
@@ -282,97 +167,32 @@ function nuevo_Movimiento(ev) {
         return     
     }
 
-    if(selec_to_calculada === moneda_to){
+    if(selec_to_calculada != moneda_to){
         error_aceptar("Necesario calcular la tasa. Moneda 'to' diferente al calculo")      
         return     
     }
-    if(selec_from_calculada === moneda_from){
+    if(selec_from_calculada != moneda_from){
         error_aceptar("Necesario calcular la tasa. Moneda 'from' diferente al calculo")      
         return 
     }
     
-    
-    peticion_alta.open("POST", "http://localhost:5000/api/v1/movimiento", true)
-    peticion_alta.onload = peticion_alta_handler
-    peticion_alta.onerror = function() { alert("No se ha podido completar la petición de movimientos")}
-    peticion_alta.setRequestHeader("Content-Type", "application/json")
-
-    
-    
-    const data_json = JSON.stringify({date:date, time:time, moneda_from:moneda_from, cantidad_from:cantidad_from, moneda_to:moneda_to, cantidad_to:cantidad_to})
-
-    peticion_alta.send(data_json)
-    
-}
-
-function error_aceptar(coment){
-    document.querySelector("#text_error").classList.remove("inactive")
-    document.querySelector("#text_error").innerHTML = coment
+    alta_Movimiento({date:date, time:time, moneda_from:moneda_from, cantidad_from:cantidad_from, moneda_to:moneda_to, cantidad_to:cantidad_to})
     desmarcar_aceptar()
-    return        
+    
+    
 }
 
-function peticion_alta_handler() {
-    if (this.readyState === 4) {
-        if (this.status === 201) {
 
-            consulta_peticion_todos()
-            consulta_peticion_estado()
-            
-            
-        } else {
-            alert("Se ha producido un error en el alta de movimientos")
-        }
-    }
-}
 
-function consulta_peticion_todos(){
-    peticion_todo.open("GET", "http://localhost:5000/api/v1/movimientos", true)
-    peticion_todo.onload = peticion_todos_handler
-    peticion_todo.onerror = function() { alert("No se ha podido completar la petición de movimientos")}
-    peticion_todo.send()
 
-}
 
-function ver_stado(){
-    clean_calc(["#cripto_invested","#cripto_recovered","#cripto_purchase_value","#cripto_Current_value"],0)
+
+
+
+
  
-    if(this.readyState == 4 && this.status == 200){
 
-        const cartera = JSON.parse(this.responseText)
-        const estado_cartera = cartera.data
 
-        color_valor_positivo_negativo(estado_cartera.invertido.toFixed(2),"#cripto_invested")
-
-        color_valor_positivo_negativo(estado_cartera.recuperado.toFixed(2),"#cripto_recovered")
-
-        color_valor_positivo_negativo(estado_cartera.valor_compra.toFixed(8),"#cripto_purchase_value")
-
-        color_valor_positivo_negativo(estado_cartera.valor_actual.toFixed(8),"#cripto_Current_value")
-    }
-
-    else{
-        
-        alert("Se ha producido un error en la consulta del estado de los movimientos")
-    } 
-            
-}
- function color_valor_positivo_negativo(valor,nombre_campo){
-    document.querySelector(nombre_campo).innerHTML = valor 
-    if (valor>= 0){
-        document.querySelector(nombre_campo).style.color = "green"          
-    }    
-    else{
-        document.querySelector(nombre_campo).style.color = "red"
-    }
- }
-
-function consulta_peticion_estado(){
-    peticion_estado.open("GET", "http://localhost:5000/api/v1/status", true)
-    peticion_estado.onload = ver_stado
-    peticion_estado.onerror = function() { alert("No se ha podido completar la petición del estado")}
-    peticion_estado.send()
-}
 
 
 window.onload = function(){
@@ -380,15 +200,14 @@ window.onload = function(){
     consulta_peticion_todos()
     consulta_peticion_estado()
     
-    document.querySelector("#btn_business").onclick = alta_Movimiento
+    document.querySelector("#btn_business").onclick = mostrar_alta_Movimiento
     document.querySelector("#calculate").onclick = revisar_Moneda
     document.querySelector("#btn_aceptar").onclick = nuevo_Movimiento
+
     const input = document.querySelector('#quantity_from')
     input.addEventListener('change', desmarcar_aceptar)
     document.querySelector('#selec_from').addEventListener('change', desmarcar_aceptar)
     document.querySelector('#selec_to').addEventListener('change', desmarcar_aceptar)
-    
-
 }
 
 
@@ -396,6 +215,7 @@ function cuenta_regresiva(){
     var interval = ""
     var date = new Date('2020-01-01 00:05');
     fin=false
+    document.querySelector("#btn_aceptar").disabled=false
 
     // Función para rellenar con ceros
     var padLeft = n => "00".substring(0, "00".length - n.length) + n;
@@ -420,38 +240,18 @@ function cuenta_regresiva(){
        
       // Si llega a 1:00, cambio color a rojo
       document.querySelector("#time").style.color = "black";
-      if( minutes <= '01' && seconds <= '50' ) {
+      if( minutes <= '04' && seconds <= '55' ) {
         document.querySelector("#time").style.color = "red";
         
       }
-      if(minutes == '04' && seconds == '20'|| fin==true){
+      if(minutes == '04' && seconds == '50'|| fin==true){
         clearInterval(interval); 
         desmarcar_aceptar()
-      }
-
-
-
-      
-      
+      }      
     }, 1000);
     
-
-
-
 }
 
-function desmarcar_aceptar(){
-    cantidad_from_calculada = 0 
-    selec_to_calculada = ""
-    selec_from_calculada=""
-    
-    clean_calc(["#cripto_coin","#cripto_total","#text_time","#text_date","#minutes","#seconds"]) 
 
-    fin=true
-    
-    document.querySelector("#btn_aceptar").disabled=false
-    document.querySelector("#calculate").classList.remove("inactive")
-    document.querySelector("#quantity_from").focus();
 
-}
  

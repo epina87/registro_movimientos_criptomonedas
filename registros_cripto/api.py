@@ -1,5 +1,5 @@
 import requests
-from config import apiKey,monedas
+from config import apiKey,MONEDAS
 
 
 class ModelError(Exception):
@@ -14,7 +14,7 @@ class Cambio:
         self.fecha = None
     
     def actualiza(self): 
-        
+        '''
         try:           
             r = requests.get("https://rest.coinapi.io/v1/exchangerate/{}/{}?apikey={}".format(self.coin_from,self.coin_to,apiKey))
         except requests.ConnectionError:
@@ -22,6 +22,7 @@ class Cambio:
             
         resultado = r.json()
         '''
+        
         resultado = {
             "time": "2022-10-17T10:33:27.0000000Z",
             "asset_id_base": "EUR",
@@ -30,15 +31,16 @@ class Cambio:
             }
         status_code = 200    
         if status_code == 200:
-        '''     
-        if r.status_code == 200:  
+             
+        #if r.status_code == 200:  
             self.tasa = resultado["rate"]
             horafecha = resultado["time"]
             self.hora = horafecha[slice(12,19)]
             self.fecha =  horafecha[slice(0,10)]
 
         else:
-            raise ModelError("{}: {}".format(r.status_code,resultado["error"]))
+            #raise ModelError("{}: {}".format(r.status_code,resultado["error"]))
+            raise ModelError("{}: {}".format(status_code,resultado["error"]))
     
 
 class TotalCambio:
@@ -46,7 +48,7 @@ class TotalCambio:
         self.intercambio_euro = {} 
     
     def buscarTodasEuro(self):
-        
+        '''
         try:
             r = requests.get("https://rest.coinapi.io/v1/exchangerate/EUR?apikey={}".format(apiKey))
         except requests.ConnectionError:
@@ -58,17 +60,17 @@ class TotalCambio:
         
         status_code = 200
         if status_code == 200:
-        '''
-        if r.status_code == 200: 
+        
+        #if r.status_code == 200: 
             tasa_moneda = resultado["rates"]
             for dic_moneda in tasa_moneda:
-                if dic_moneda.get("asset_id_quote") in monedas:
+                if dic_moneda.get("asset_id_quote") in MONEDAS:
                     self.intercambio_euro[dic_moneda.get("asset_id_quote")] = 1/dic_moneda.get("rate")   
             
 
         else:
-            raise ModelError("{}: {}".format(r.status_code,resultado["error"]))
-            #raise ModelError("{}: {}".format(status_code,resultado["error"]))
+           # raise ModelError("{}: {}".format(r.status_code,resultado["error"]))
+            raise ModelError("{}: {}".format(status_code,resultado["error"]))
 
 
 def coinapi_pruebas():

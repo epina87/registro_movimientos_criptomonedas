@@ -31,8 +31,6 @@ def all_movements():
 @app.route("/api/v1/movimiento", methods=["POST"])
 def new_movements():
     registro = request.json
-    print(registro)
-   
     
     form = MovimientosForm(data=registro)
     form.validate()
@@ -118,9 +116,13 @@ def selec_from():
 
 @app.route("/api/v1/selec/<coin_from>/<coin_to>/<q_from>", methods=["GET"])
 def selec(coin_from,coin_to,q_from):
-    if coin_from == coin_to or q_from==0 or q_from=="" or coin_from == "" or coin_to== "":
+    try:
+        if coin_from == coin_to or float(q_from)<=0 or q_from=="" or coin_from == "" or coin_to== "":
+            error_txt = "Datos Incorrectos"
+            return return_josn_fail(error_txt,400,error_txt)
+    except:
         error_txt = "Datos Incorrectos"
-        return return_josn_fail(error_txt,400,error_txt)
+        return return_josn_fail(error_txt,400,error_txt)    
     else:  
         if coin_from != "EUR":     
             sufficient_quantity = sale_currency_control(coin_from)        

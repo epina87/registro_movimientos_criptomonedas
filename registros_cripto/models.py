@@ -1,5 +1,5 @@
 import sqlite3
-from config import apiKey,monedas,ORIGIN_DATA
+from config import apiKey,MONEDAS,ORIGIN_DATA
 
 
 
@@ -37,8 +37,8 @@ def select_coins():
     history = cur.fetchall()
     conn.close()
     
-    dic_sell =  dictionary(monedas)
-    dic_buy  = dictionary(monedas)
+    dic_sell =  dictionary(MONEDAS)
+    dic_buy  = dictionary(MONEDAS)
 
     for registro in history:    
         dic_sell[registro[0]] += registro[1] 
@@ -51,7 +51,7 @@ def select_coins():
             if dic_buy[moneda]>dic_sell[moneda]:
                 monedas_cartera.append(moneda)    
             
-    return monedas_cartera,monedas
+    return monedas_cartera,MONEDAS
 
 def filas_to_diccionario(filas, columnas):
     resultado = []
@@ -97,8 +97,8 @@ def result_total(totalCambio):
     history = cur.fetchall()
     conn.close()
     
-    dic_sell =  dictionary(monedas)
-    dic_buy  = dictionary(monedas)
+    dic_sell =  dictionary(MONEDAS)
+    dic_buy  = dictionary(MONEDAS)
     
     for registro in history:    
         dic_sell[registro[0]] += registro[1] 
@@ -120,8 +120,9 @@ def result_total(totalCambio):
             recovered += dic_buy.get(moneda)
     purchase_value = invested - recovered 
     Current_value =  total_buy - total_sell
+    result = round(Current_value,8) - round(purchase_value,8) 
 
-    total = {"invertido":round(invested,2),"recuperado":round(recovered,2),"valor_compra":round(purchase_value,8),"valor_actual":round(Current_value,8)}
+    total = {"invertido":round(invested,2),"recuperado":round(recovered,2),"valor_compra":round(purchase_value,8),"valor_actual":round(Current_value,8),"resultado":round(result,8) }
 
     return total
     

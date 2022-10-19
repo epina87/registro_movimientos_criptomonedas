@@ -6,7 +6,10 @@
     <link rel="stylesheet" href="/static/css/pico.css">
     <link rel="stylesheet" href="/static/css/style.css">
    
+    <script src="/static/js/spa_routes.js"></script>
+    <script src="/static/js/spa_funcion.js"></script>
     <script src="/static/js/spa.js"></script>
+    
     <title>Registro de movimientos de criptomonedas</title>
     
 
@@ -52,6 +55,11 @@
                     <th>V. actual:</th>
                     <td id="cripto_Current_value"></td>
                 </tr>
+                <hr>
+                <tr>
+                    <th class="blod">Resultado:</th>
+                    <td id="cripto_Result_value" class="blod"></td>
+                </tr>
 
             </table>
 
@@ -71,8 +79,6 @@
 
 
                     
-                    
-
                     <a title="calculate" href="calculate" id="calculate">
                         <img src="/static/img/calculate.png" alt="calculate" />
                     </a>
@@ -81,6 +87,7 @@
                     <span id="text_error" class="inactive"> error</span>
                     <span id="text_date" class="inactive"></span>&nbsp;&nbsp;
                     <span id="text_time" class="inactive"></span>
+                    <br>
                     <p id="time">
                         <span id="minutes"></span>  
                         <span id="seconds"></span> 
