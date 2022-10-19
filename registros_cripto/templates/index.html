@@ -16,8 +16,12 @@
 
 </head>
 <body class = "container" >
-    <header id="header_crypto" >
-        <h1>myCRYPTO</h1>        
+    <header id="header_crypto"   >
+        
+        <canvas id="canvas">
+            <h1>myCRYPTO</h1>   
+        </canvas>     
+               
     </header>
     <section id="where_covers">
         <article id="movements">
@@ -34,6 +38,7 @@
             </table>
             <span id="mensaje">No se han encontrado movimientos</span>
         </article>
+
         <article id="investment">
             <table>
                 <tr>
@@ -55,17 +60,21 @@
                     <th>V. actual:</th>
                     <td id="cripto_Current_value"></td>
                 </tr>
-                <hr>
+                
                 <tr>
                     <th class="blod">Resultado:</th>
                     <td id="cripto_Result_value" class="blod"></td>
                 </tr>
 
             </table>
+            <div class="center">
+                <button id="btn_business">+</button>   
+            </div>
 
 
-            <button id="btn_business">+</button>   
+            
         </article>
+
         <article id="business" class="inactive">
             
 
@@ -80,7 +89,7 @@
 
                     
                     <a title="calculate" href="calculate" id="calculate">
-                        <img src="/static/img/calculate.png" alt="calculate" />
+                        <img src="/static/img/Calc_Icon.png" alt="calculate" />
                     </a>
                     
 
@@ -106,17 +115,22 @@
                     <table>
                         <tr>
                             <th>Q:</th>
-                            <td id="cripto_total"></td>
+                            <td id="cripto_total" class="blod"></td>
                         </tr>
                        
                         <tr>
                             <th>P.V:</th>
-                            <td id="cripto_coin"></td>
+                            <td id="cripto_coin" class="blod"></td>
                         </tr>
                     </table>
+                    <div class="center">
+                        <button id="btn_aceptar">BUY</button>  
+                    </div>
                     
-
-                    <button id="btn_aceptar">Aceptar</button>
+                    
+                      
+                    
+                    
                 </div>
                 
             </form>
@@ -124,6 +138,7 @@
         </article>
 
     </section>
+
 
     <footer>
         <div  class="container">

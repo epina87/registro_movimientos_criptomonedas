@@ -80,46 +80,34 @@ function color_valor_positivo_negativo(valor,nombre_campo){
 
 }
 
-function cuenta_regresiva(){
-    var interval = ""
-    var date = new Date('2020-01-01 00:05');
-    fin=false
-    document.querySelector("#btn_aceptar").disabled=false
 
-    // Función para rellenar con ceros
-    var padLeft = n => "00".substring(0, "00".length - n.length) + n;
-    
-    // Asignar el intervalo a una variable para poder eliminar el intervale cuando llegue al limite
-    var interval = setInterval(() => {
-        
-        
-      // Asignar el valor de minutos
-      var minutes = padLeft(date.getMinutes() + "");
-      // Asignqr el valor de segundos
-      var seconds = padLeft(date.getSeconds() + "");
+function color_head(){
+    const canvas = document.querySelector("#canvas")
+    const ctx = canvas.getContext("2d")
+    const WIDTH = canvas.width = 1400
+    const HEIGHT = canvas.height= 300
 
-      document.querySelector("#minutes").innerHTML = "Oferta valida -   " + minutes+":"
-      document.querySelector("#seconds").innerHTML = seconds
-      
-        console.log(minutes,seconds)
-        console.log(fin)
-      
-      // Restarle a la fecha actual 1000 milisegundos
-      date = new Date(date.getTime() - 1000);
-       
-      // Si llega a 1:00, cambio color a rojo
-      document.querySelector("#time").style.color = "black";
-      if( minutes <= '04' && seconds <= '55' ) {
-        document.querySelector("#time").style.color = "red";
-        
-      }
-      if(minutes == '04' && seconds == '50'|| fin==true){
-        clearInterval(interval); 
-        desmarcar_aceptar()
-      }      
-    }, 1000);
-    
+    const backgroundgradient = ctx.createRadialGradient(0,0,200,WIDTH,HEIGHT, 100)
+
+    backgroundgradient.addColorStop(0,"blue")
+    backgroundgradient.addColorStop(0.5,"hotpink")
+    backgroundgradient.addColorStop(1,"purple")
+
+    ctx.fillStyle = backgroundgradient
+    ctx.fillRect(0,0,WIDTH,HEIGHT)
+
+    ctx.font= "70px Verdana"
+    ctx.strokeStyle = "white";
+    ctx.strokeText("myCRYPTO", 300, 150);
+
+    const colortext = ctx.createLinearGradient(0, 0, WIDTH, HEIGHT)
+    colortext.addColorStop(0,"red")
+    colortext.addColorStop(0.2,"yellow")
+    colortext.addColorStop(0.5,"green")
+
+    ctx.font= "69px Verdana"
+    ctx.fillStyle = colortext;
+    ctx.fillText("myCRYPTO", 300, 150);
 }
-
 
 

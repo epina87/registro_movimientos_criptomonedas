@@ -104,9 +104,9 @@ function ver_stado(){
 
         color_valor_positivo_negativo(estado_cartera.valor_compra.toFixed(8),"#cripto_purchase_value")
 
-        color_valor_positivo_negativo(estado_cartera.valor_actual.toFixed(8),"#cripto_Current_value")
+        color_valor_positivo_negativo(estado_cartera.valor_actual.toFixed(2),"#cripto_Current_value")
 
-        color_valor_positivo_negativo(estado_cartera.resultado.toFixed(8),"#cripto_Result_value")
+        color_valor_positivo_negativo(estado_cartera.resultado.toFixed(2),"#cripto_Result_value")
 
     }
 
@@ -208,6 +208,7 @@ function consulta_revisar_moneda(selec_from,selec_to,quantity){
             cantidad_from_calculada = quantity
             selec_to_calculada = selec_to
             selec_from_calculada = selec_from
+            
 
             fin=true
             cuenta_regresiva()
@@ -216,17 +217,61 @@ function consulta_revisar_moneda(selec_from,selec_to,quantity){
         }
         
         else {
-            const monedas_cartera = JSON.parse(this.responseText)
+            if(this.status == 400){
+                const monedas_cartera = JSON.parse(this.responseText)            
+                const status = monedas_cartera.status
+                if (status=="fail"){
+                    document.querySelector("#text_error").classList.remove("inactive")
+                    document.querySelector("#text_error").innerHTML = monedas_cartera.mensaje
+                }    
+
+
+                }          
             
-            const status = monedas_cartera.status
-            
-            if (status=="fail"){
-                document.querySelector("#text_error").classList.remove("inactive")
-                document.querySelector("#text_error").innerHTML = monedas_cartera.mensaje
-            }    
             }
         }
     
     peticion_calculo.send()
 }
 
+
+function cuenta_regresiva(){
+    var interval = ""
+    var date = new Date('2020-01-01 00:05');
+    fin=false
+    document.querySelector("#btn_aceptar").disabled=false
+
+    // Función para rellenar con ceros
+    var padLeft = n => "00".substring(0, "00".length - n.length) + n;
+    
+    // Asignar el intervalo a una variable para poder eliminar el intervale cuando llegue al limite
+    var interval = setInterval(() => {
+        
+        
+      // Asignar el valor de minutos
+      var minutes = padLeft(date.getMinutes() + "");
+      // Asignqr el valor de segundos
+      var seconds = padLeft(date.getSeconds() + "");
+
+      document.querySelector("#minutes").innerHTML = "Oferta valida -   " + minutes+":"
+      document.querySelector("#seconds").innerHTML = seconds
+      
+        console.log(minutes,seconds)
+        console.log(fin)
+      
+      // Restarle a la fecha actual 1000 milisegundos
+      date = new Date(date.getTime() - 1000);
+       
+      // Si llega a 1:00, cambio color a rojo
+      document.querySelector("#time").style.color = "black";
+      if( minutes <= '04' && seconds <= '55' ) {
+        document.querySelector("#time").style.color = "red";
+        
+      }
+      if(minutes == '04' && seconds == '50'|| fin==true){
+        clearInterval(interval); 
+        desmarcar_aceptar()
+      }      
+    }, 1000);
+    
+}

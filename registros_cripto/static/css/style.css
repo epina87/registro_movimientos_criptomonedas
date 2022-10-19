@@ -1,8 +1,11 @@
-header, footer{
+body > header, footer{
     background-color: var(--primary);
     color: var(--primary-inverse);
     font-size: 1.4em;
     font-weight: bold;
+
+    background: red, #334;
+    padding: 0;
 }
 
 body{
@@ -12,13 +15,17 @@ body{
     margin: 0;
 }
 
+*{
+  background: #334;
+}
+
 
 
 #header_crypto{
   display:flex;
   justify-content: center;
   align-items: center;
-  padding: 30px;
+  padding: 0;
 }
 
 h1{
@@ -69,6 +76,10 @@ img{
 
 footer{
   max-height: 2%;
+  font-size: 20px;
+  background: linear-gradient(blue, hotpink,purple);
+  color: rgba(236, 168, 126, 0.58);
+  
 }
 
 
@@ -81,4 +92,90 @@ footer{
 
 .blod{
   font-weight: bold;
+  font-size: 20px;
+}
+
+ article{
+  background: #334 ;
+  padding: 0;
+}
+
+th {
+  color: rgba(207, 128, 48, 0.83);
+  font-weight: bold;
+}
+
+td{
+  color: rgba(193, 176, 26, 0.53);
+}
+
+#business_new{
+  color:  rgba(207, 128, 48, 0.83);
+}
+
+span{
+  color:rgba(140, 232, 104, 0.72);
+}
+
+select,input{
+  color:  rgba(231, 215, 75, 0.82);
+  background-color:rgba(122, 119, 98, 0.73) ;
+}
+
+
+
+button{
+  background-color: rgba(135, 117, 234, 0.59) ;
+  color:rgba(232, 194, 104, 0.85);
+  border-radius: 7px;
+
+
+  text-align: center;
+  border-radius: 30%; 
+  font-weight: bold;
+  font-size: 15px;
+}
+#btn_business{
+  width: 70px;
+  height: 70px;
+  font-size: 20px;
+}
+
+#btn_business:hover{
+  width: 100%;
+  height: 70px;
+  font-size: 25px;
+}
+
+
+#btn_aceptar{
+  width: 80px;
+  height: 80px;
+  font-size: 15px;
+}
+
+#btn_aceptar:hover{
+  width: 100%;
+  height: 80px;
+  font-size: 25px;
+}
+
+button:hover{
+  border: 2px solid #dadada;  
+  box-shadow: 0 0 10px #9ecaed;
+  background-color: rgba(92, 69, 227, 0.59);
+  
+  
+  
+  border-radius: 0.25rem;
+}
+
+
+
+.center{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
 }

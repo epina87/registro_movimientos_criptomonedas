@@ -9,6 +9,9 @@ selec_to_calculada= ""
 selec_from_calculada= ""
 
 
+
+
+
 function mostrar_alta_Movimiento(ev) {
     ev.preventDefault()
 
@@ -64,6 +67,7 @@ function revisar_Moneda(ev) {
     
 }
 
+
 function nuevo_Movimiento(ev) {
     ev.preventDefault()
 
@@ -113,6 +117,7 @@ function nuevo_Movimiento(ev) {
 }
 
 
+
 window.onload = function(){
 
     consulta_peticion_todos()
@@ -126,7 +131,17 @@ window.onload = function(){
     input.addEventListener('change', desmarcar_aceptar)
     document.querySelector('#selec_from').addEventListener('change', desmarcar_aceptar)
     document.querySelector('#selec_to').addEventListener('change', desmarcar_aceptar)
+
+    color_head()
 }
+
+
+
+
+
+
+ 
+
 
 
 
