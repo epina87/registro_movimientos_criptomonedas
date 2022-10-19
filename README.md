@@ -5,7 +5,9 @@
 ___        
 
 ### 2- Creación base datos con el fichero _"/data/create.sql"._
-    * -> sqlite3 datos.db
+    #### opción desde terminal. 
+    
+    * -> sqlite3 "Nombre de la base de datos".db
     * sqlite> .read data/create.sql
     * sqlite> .q
 ___
