@@ -120,9 +120,9 @@ def result_total(totalCambio):
             recovered += dic_buy.get(moneda)
     purchase_value = invested - recovered 
     Current_value =  total_buy - total_sell
-    result = round(Current_value,8) - round(purchase_value,8) 
+    result = round(Current_value,2) - round(purchase_value,8) 
 
-    total = {"invertido":round(invested,2),"recuperado":round(recovered,2),"valor_compra":round(purchase_value,8),"valor_actual":round(Current_value,8),"resultado":round(result,8) }
+    total = {"invertido":round(invested,2),"recuperado":round(recovered,2),"valor_compra":round(purchase_value,8),"valor_actual":round(Current_value,2),"resultado":round(result,2) }
 
     return total
     

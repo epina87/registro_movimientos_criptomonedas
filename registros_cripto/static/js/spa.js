@@ -9,15 +9,11 @@ selec_to_calculada= ""
 selec_from_calculada= ""
 
 
-
-
-
 function mostrar_alta_Movimiento(ev) {
     ev.preventDefault()
 
     clean_calc(["#cripto_coin","#cripto_total","#text_time","#text_date"])  
     document.querySelector("#quantity_from").value = ""
-
     document.querySelector("#text_time").classList.remove("inactive")
 
 
@@ -26,31 +22,12 @@ function mostrar_alta_Movimiento(ev) {
         btn_alta.innerHTML = '-' 
         document.querySelector("#business").classList.remove("inactive")
 
-        const url = 'http://localhost:5000/api/v1/selec_from'
+        consulta_buscar_monedas()
 
-        peticion_selec_moneda.open("GET", url,true)
-        peticion_selec_moneda.onreadystatechange = function(){
-               
-        if(this.readyState == 4 && this.status == 200){
-
-            const monedas_cartera = JSON.parse(this.responseText)
-            const monedas_disponibles_cartera = monedas_cartera.data
-            const monedas_todas = monedas_cartera.todas 
-
-            document.querySelector("#selec_from").innerHTML = ""
-            const selec_from = document.querySelector("#selec_from")
-            combo_monedas(selec_from,monedas_disponibles_cartera)
-            document.querySelector("#selec_to").innerHTML = ""
-            const selec_to = document.querySelector("#selec_to")
-            combo_monedas(selec_to,monedas_todas)      
-
-            document.querySelector("#btn_aceptar").disabled=true   
-            document.querySelector("#calculate").classList.remove("inactive")  
-            document.querySelector("#quantity_from").focus();
-            
-        }
-        }
-        peticion_selec_moneda.send()            
+        document.querySelector("#btn_aceptar").disabled=true   
+        document.querySelector("#calculate").classList.remove("inactive")  
+        document.querySelector("#quantity_from").focus();
+        
     }
     else{
         btn_alta.innerHTML ='+'    
@@ -70,68 +47,21 @@ function revisar_Moneda(ev) {
     clean_calc(["#cripto_coin","#cripto_total","#text_time","#text_date"])
     fin=true
 
-    
-
     selec_from = document.querySelector("#selec_from").value
     selec_to   = document.querySelector("#selec_to").value
     quantity   = document.querySelector("#quantity_from").value
 
-    if (selec_from === selec_to){
-        document.querySelector("#text_error").classList.remove("inactive")
-        document.querySelector("#text_error").innerHTML = "Las monedas tiene que ser diferentes"
-        
+    if (selec_from === selec_to){       
+        error_aceptar("Las monedas tiene que ser diferentes")
         return        
     }
     if (!quantity ||quantity <= 0){
-        document.querySelector("#text_error").classList.remove("inactive")
-        document.querySelector("#text_error").innerHTML = "La cantidad tiene que ser superior a 0"        
+        error_aceptar("La cantidad tiene que ser superior a 0")      
         return        
     }
     
-
-    const url = 'http://localhost:5000/api/v1/selec/'+selec_from+'/'+selec_to+'/'+quantity
-
-    peticion_calculo.open("GET", url,true)
-    peticion_calculo.onreadystatechange = function(){
-        
-        if(this.readyState == 4 && this.status == 200){
-            
-            const monedas_cartera = JSON.parse(this.responseText)
-            const precio_moneda = monedas_cartera.data
-
-            document.querySelector("#cripto_total").innerHTML = precio_moneda.q.toFixed(8)
-            document.querySelector("#cripto_coin").innerHTML = precio_moneda.pv.toFixed(8)
-
-            document.querySelector("#text_time").innerHTML = precio_moneda.time
-            document.querySelector("#text_time").classList.remove("inactive")
-            document.querySelector("#text_date").innerHTML = precio_moneda.date
-            document.querySelector("#text_date").classList.remove("inactive")
-
-            document.querySelector("#calculate").classList.add("inactive")
-
-            cantidad_from_calculada = quantity
-            selec_to_calculada = selec_to
-            selec_from_calculada = selec_from
-
-            fin=true
-            cuenta_regresiva()
-
-            
-        }
-        
-        else {
-            const monedas_cartera = JSON.parse(this.responseText)
-            
-            const status = monedas_cartera.status
-            
-            if (status=="fail"){
-                document.querySelector("#text_error").classList.remove("inactive")
-                document.querySelector("#text_error").innerHTML = monedas_cartera.mensaje
-            }    
-            }
-        }
+    consulta_revisar_moneda(selec_from,selec_to,quantity)
     
-    peticion_calculo.send()
 }
 
 function nuevo_Movimiento(ev) {
@@ -183,18 +113,6 @@ function nuevo_Movimiento(ev) {
 }
 
 
-
-
-
-
-
-
-
- 
-
-
-
-
 window.onload = function(){
 
     consulta_peticion_todos()
@@ -211,46 +129,7 @@ window.onload = function(){
 }
 
 
-function cuenta_regresiva(){
-    var interval = ""
-    var date = new Date('2020-01-01 00:05');
-    fin=false
-    document.querySelector("#btn_aceptar").disabled=false
 
-    // Función para rellenar con ceros
-    var padLeft = n => "00".substring(0, "00".length - n.length) + n;
-    
-    // Asignar el intervalo a una variable para poder eliminar el intervale cuando llegue al limite
-    var interval = setInterval(() => {
-        
-        
-      // Asignar el valor de minutos
-      var minutes = padLeft(date.getMinutes() + "");
-      // Asignqr el valor de segundos
-      var seconds = padLeft(date.getSeconds() + "");
-
-      document.querySelector("#minutes").innerHTML = "Oferta valida -   " + minutes+":"
-      document.querySelector("#seconds").innerHTML = seconds
-      
-        console.log(minutes,seconds)
-        console.log(fin)
-      
-      // Restarle a la fecha actual 1000 milisegundos
-      date = new Date(date.getTime() - 1000);
-       
-      // Si llega a 1:00, cambio color a rojo
-      document.querySelector("#time").style.color = "black";
-      if( minutes <= '04' && seconds <= '55' ) {
-        document.querySelector("#time").style.color = "red";
-        
-      }
-      if(minutes == '04' && seconds == '50'|| fin==true){
-        clearInterval(interval); 
-        desmarcar_aceptar()
-      }      
-    }, 1000);
-    
-}
 
 
 

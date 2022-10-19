@@ -52,8 +52,7 @@ function combo_monedas(selec,monedas){
 function error_aceptar(coment){
     document.querySelector("#text_error").classList.remove("inactive")
     document.querySelector("#text_error").innerHTML = coment
-    desmarcar_aceptar()
-    return        
+    desmarcar_aceptar()       
 }
 
 function color_valor_positivo_negativo(valor,nombre_campo){
@@ -81,7 +80,46 @@ function color_valor_positivo_negativo(valor,nombre_campo){
 
 }
 
+function cuenta_regresiva(){
+    var interval = ""
+    var date = new Date('2020-01-01 00:05');
+    fin=false
+    document.querySelector("#btn_aceptar").disabled=false
 
+    // Función para rellenar con ceros
+    var padLeft = n => "00".substring(0, "00".length - n.length) + n;
+    
+    // Asignar el intervalo a una variable para poder eliminar el intervale cuando llegue al limite
+    var interval = setInterval(() => {
+        
+        
+      // Asignar el valor de minutos
+      var minutes = padLeft(date.getMinutes() + "");
+      // Asignqr el valor de segundos
+      var seconds = padLeft(date.getSeconds() + "");
+
+      document.querySelector("#minutes").innerHTML = "Oferta valida -   " + minutes+":"
+      document.querySelector("#seconds").innerHTML = seconds
+      
+        console.log(minutes,seconds)
+        console.log(fin)
+      
+      // Restarle a la fecha actual 1000 milisegundos
+      date = new Date(date.getTime() - 1000);
+       
+      // Si llega a 1:00, cambio color a rojo
+      document.querySelector("#time").style.color = "black";
+      if( minutes <= '04' && seconds <= '55' ) {
+        document.querySelector("#time").style.color = "red";
+        
+      }
+      if(minutes == '04' && seconds == '50'|| fin==true){
+        clearInterval(interval); 
+        desmarcar_aceptar()
+      }      
+    }, 1000);
+    
+}
 
 
 

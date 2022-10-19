@@ -4,7 +4,7 @@
 
 
 
-/* Consulta Todos movimientos */
+/* Consulta Todos Movimientos */
 
 function consulta_peticion_todos(){
     peticion_todo.open("GET", "http://localhost:5000/api/v1/movimientos", true)
@@ -120,7 +120,7 @@ function ver_stado(){
 
 
 
-/* Consulta Alta movimientos */
+/* Consulta Alta Movimientos */
 
 function alta_Movimiento(dic_movimiento) {
 
@@ -146,5 +146,87 @@ function peticion_alta_handler() {
             alert("Se ha producido un error en el alta de movimientos")
         }
     }
+}
+
+
+
+
+/* Buscar Monedas */
+
+function consulta_buscar_monedas(){
+    const url = 'http://localhost:5000/api/v1/selec_from'
+
+    peticion_selec_moneda.open("GET", url,true)
+    peticion_selec_moneda.onreadystatechange = function(){
+        
+    if(this.readyState == 4 && this.status == 200){
+
+        const monedas_cartera = JSON.parse(this.responseText)
+
+        const monedas_disponibles_cartera = monedas_cartera.data
+        const monedas_todas = monedas_cartera.todas 
+
+        document.querySelector("#selec_from").innerHTML = ""
+        const selec_from = document.querySelector("#selec_from")
+        combo_monedas(selec_from,monedas_disponibles_cartera)
+        document.querySelector("#selec_to").innerHTML = ""
+        const selec_to = document.querySelector("#selec_to")
+        combo_monedas(selec_to,monedas_todas)      
+       
+    }
+    }
+    peticion_selec_moneda.send()            
+}
+
+
+
+
+/*Revisar Monedas */
+
+function consulta_revisar_moneda(selec_from,selec_to,quantity){
+
+    const url = 'http://localhost:5000/api/v1/selec/'+selec_from+'/'+selec_to+'/'+quantity
+
+    peticion_calculo.open("GET", url,true)
+    peticion_calculo.onreadystatechange = function(){
+        
+        if(this.readyState == 4 && this.status == 200){
+            
+            const monedas_cartera = JSON.parse(this.responseText)
+            const precio_moneda = monedas_cartera.data
+
+            document.querySelector("#cripto_total").innerHTML = precio_moneda.q.toFixed(8)
+            document.querySelector("#cripto_coin").innerHTML = precio_moneda.pv.toFixed(8)
+
+            document.querySelector("#text_time").innerHTML = precio_moneda.time
+            document.querySelector("#text_time").classList.remove("inactive")
+            document.querySelector("#text_date").innerHTML = precio_moneda.date
+            document.querySelector("#text_date").classList.remove("inactive")
+
+            document.querySelector("#calculate").classList.add("inactive")
+
+            cantidad_from_calculada = quantity
+            selec_to_calculada = selec_to
+            selec_from_calculada = selec_from
+
+            fin=true
+            cuenta_regresiva()
+
+            
+        }
+        
+        else {
+            const monedas_cartera = JSON.parse(this.responseText)
+            
+            const status = monedas_cartera.status
+            
+            if (status=="fail"){
+                document.querySelector("#text_error").classList.remove("inactive")
+                document.querySelector("#text_error").innerHTML = monedas_cartera.mensaje
+            }    
+            }
+        }
+    
+    peticion_calculo.send()
 }
 
