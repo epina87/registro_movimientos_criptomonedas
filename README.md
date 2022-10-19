@@ -6,13 +6,13 @@ ___
 
 ### 2- Creación base datos con el fichero _"/data/create.sql"_.
     * -> _sqlite3 datos.db_
-   * sqlite> _.read data/create.sql_
-   * sqlite> _.q_
+    * sqlite> _.read data/create.sql_
+    * sqlite> _.q_
 ___
 
 ### 3- Modificación del fichero config_template.py
    * a) Modificar ORIGIN_DATA=_"Añadiendo aqui la Ruta al fichero sqlite"_
-    * b) Modificar SECRET_KEY= _"Añadiendo aqui la clave secreta para el encriptado de datos"_
+   * b) Modificar SECRET_KEY= _"Añadiendo aqui la clave secreta para el encriptado de datos"_
    * c) Modificar APIKEY = _"Añadiendo aqui su apikey obtenida en coinapi.io"_
    * d) Renombrar el fichero config_template.py por config.py
 ___
