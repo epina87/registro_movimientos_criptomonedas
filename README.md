@@ -1,18 +1,18 @@
 # Registros de las transacciones de compra/venta de criptomonedas
 
 ### 1- Instalación de las dependencias, _"requirements.txt"._
-        * -> pip install -r requirements.txt
+        *pip install -r requirements.txt
 ___        
 
 ### 2- Creación base datos con el fichero _"/data/create.sql"._
   #### opción desde terminal. 
     
-    * -> sqlite3 "Nombre de la base de datos".db
-    * sqlite> .read data/create.sql
-    * sqlite> .q
+    * sqlite3 "Nombre de la base de datos".db
+    * .read data/create.sql
+    * .q
 
-  #### opción DB Browser SQLite
-    * link ejemplo ->  https://www.asesoriaensig.com.mx/sql-basico-crear-una-base-de-datos-sqlite-y-agregar-una-tabla/
+  #### opción DB Browser SQLite (link ejemplo)
+    * https://www.asesoriaensig.com.mx/sql-basico-crear-una-base-de-datos-sqlite-y-agregar-una-tabla/
 ___
 
 ### 3- Modificación del fichero config_template.py
