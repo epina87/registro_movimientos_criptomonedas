@@ -21,7 +21,7 @@ function clear_tab(){
     thtime.innerHTML = "Hora"
     thfrom_sale.innerHTML = "From"
     thquantity_sale.innerHTML = "Cantidad"
-    thfrom_buy.innerHTML = "From"
+    thfrom_buy.innerHTML = "To"
     thquantity_buy.innerHTML = "Cantidad"
 
     trow.appendChild(thdate)
@@ -141,16 +141,16 @@ function color_head(){
 
     ctx.font= "70px 'Courgette', cursive"
     ctx.strokeStyle = "white";
-    ctx.strokeText("myCRYPTO", 300, 150);
+    ctx.strokeText("myCRYPTO", 480, 150);
 
     const colortext = ctx.createLinearGradient(0, 0, WIDTH, HEIGHT)
-    colortext.addColorStop(0.2,"red")
-    colortext.addColorStop(0.3,"yellow")
-    colortext.addColorStop(0.5,"green")
+    colortext.addColorStop(0.3,"red")
+    colortext.addColorStop(0.5,"yellow")
+    colortext.addColorStop(0.6,"green")
 
     ctx.font= "69px  'Courgette', cursive"
     ctx.fillStyle = colortext;
-    ctx.fillText("myCRYPTO", 300, 150);
+    ctx.fillText("myCRYPTO", 480, 150);
 }
 
 
