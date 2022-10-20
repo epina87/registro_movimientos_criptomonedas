@@ -1,7 +1,7 @@
 # Registros de las transacciones de compra/venta de criptomonedas
 
 ### 1- Instalación de las dependencias, _"requirements.txt"._
-        *pip install -r requirements.txt
+        pip install -r requirements.txt
 ___        
 
 ### 2- Creación base datos con el fichero _"/data/create.sql"._
