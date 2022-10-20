@@ -90,22 +90,22 @@ function color_head(){
     const backgroundgradient = ctx.createRadialGradient(0,0,200,WIDTH,HEIGHT, 100)
 
     backgroundgradient.addColorStop(0,"blue")
-    backgroundgradient.addColorStop(0.5,"hotpink")
+    backgroundgradient.addColorStop(0.5,"#eb3f00")
     backgroundgradient.addColorStop(1,"purple")
 
     ctx.fillStyle = backgroundgradient
     ctx.fillRect(0,0,WIDTH,HEIGHT)
 
-    ctx.font= "70px Verdana"
+    ctx.font= "70px 'Courgette', cursive"
     ctx.strokeStyle = "white";
     ctx.strokeText("myCRYPTO", 300, 150);
 
     const colortext = ctx.createLinearGradient(0, 0, WIDTH, HEIGHT)
-    colortext.addColorStop(0,"red")
-    colortext.addColorStop(0.2,"yellow")
+    colortext.addColorStop(0.2,"red")
+    colortext.addColorStop(0.3,"yellow")
     colortext.addColorStop(0.5,"green")
 
-    ctx.font= "69px Verdana"
+    ctx.font= "69px  'Courgette', cursive"
     ctx.fillStyle = colortext;
     ctx.fillText("myCRYPTO", 300, 150);
 }

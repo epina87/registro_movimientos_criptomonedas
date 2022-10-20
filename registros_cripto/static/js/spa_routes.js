@@ -237,7 +237,7 @@ function consulta_revisar_moneda(selec_from,selec_to,quantity){
 
 function cuenta_regresiva(){
     var interval = ""
-    var date = new Date('2020-01-01 00:05');
+    var date = new Date('2020-01-01 00:03');
     fin=false
     document.querySelector("#btn_aceptar").disabled=false
 
@@ -264,11 +264,11 @@ function cuenta_regresiva(){
        
       // Si llega a 1:00, cambio color a rojo
       document.querySelector("#time").style.color = "black";
-      if( minutes <= '04' && seconds <= '55' ) {
+      if( minutes <= '01' && seconds <= '00' ) {
         document.querySelector("#time").style.color = "red";
         
       }
-      if(minutes == '04' && seconds == '50'|| fin==true){
+      if(minutes == '00' && seconds == '00'|| fin==true){
         clearInterval(interval); 
         desmarcar_aceptar()
       }      

@@ -1,3 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Courgette&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Lobster+Two:wght@400;700&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Kaushan+Script&display=swap');
+
 body > header, footer{
     background-color: var(--primary);
     color: var(--primary-inverse);
@@ -6,6 +12,7 @@ body > header, footer{
 
     background: red, #334;
     padding: 0;
+    font-family: 'Courgette', cursive;
 }
 
 body{
@@ -17,6 +24,7 @@ body{
 
 *{
   background: #334;
+  font-family: 'Lobster Two', cursive;
 }
 
 
@@ -77,7 +85,7 @@ img{
 footer{
   max-height: 2%;
   font-size: 20px;
-  background: linear-gradient(blue, hotpink,purple);
+  background: linear-gradient(blue, #eb3f00,purple);
   color: rgba(236, 168, 126, 0.58);
   
 }
@@ -107,6 +115,7 @@ th {
 
 td{
   color: rgba(193, 176, 26, 0.53);
+  font-family: 'Kaushan Script', cursive;
 }
 
 #business_new{
@@ -117,9 +126,11 @@ span{
   color:rgba(140, 232, 104, 0.72);
 }
 
-select,input{
+select,input,option{
   color:  rgba(231, 215, 75, 0.82);
   background-color:rgba(122, 119, 98, 0.73) ;
+
+  font-family: 'Kaushan Script', cursive;
 }
 
 
@@ -129,11 +140,12 @@ button{
   color:rgba(232, 194, 104, 0.85);
   border-radius: 7px;
 
-
+  font-family: 'Courgette', cursive;
   text-align: center;
   border-radius: 30%; 
   font-weight: bold;
   font-size: 15px;
+
 }
 #btn_business{
   width: 70px;
