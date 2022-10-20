@@ -10,6 +10,9 @@ ___
     * -> sqlite3 "Nombre de la base de datos".db
     * sqlite> .read data/create.sql
     * sqlite> .q
+
+    ### opción DB Browser SQLite
+    * link ejemplo ->  https://www.asesoriaensig.com.mx/sql-basico-crear-una-base-de-datos-sqlite-y-agregar-una-tabla/
 ___
 
 ### 3- Modificación del fichero config_template.py
