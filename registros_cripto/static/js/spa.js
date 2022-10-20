@@ -15,6 +15,7 @@ selec_from_calculada= ""
 function mostrar_alta_Movimiento(ev) {
     ev.preventDefault()
 
+
     clean_calc(["#cripto_coin","#cripto_total","#text_time","#text_date"])  
     document.querySelector("#quantity_from").value = ""
     document.querySelector("#text_time").classList.remove("inactive")
@@ -45,7 +46,8 @@ function mostrar_alta_Movimiento(ev) {
 
 function revisar_Moneda(ev) {
     ev.preventDefault()
-    
+
+
     document.querySelector("#text_error").classList.add("inactive")
     clean_calc(["#cripto_coin","#cripto_total","#text_time","#text_date"])
     fin=true
@@ -71,6 +73,7 @@ function revisar_Moneda(ev) {
 function nuevo_Movimiento(ev) {
     ev.preventDefault()
 
+
     const date = document.querySelector("#text_date").innerText 
     const time = document.querySelector("#text_time").innerText 
     const moneda_from = document.querySelector("#selec_from").value
@@ -80,35 +83,9 @@ function nuevo_Movimiento(ev) {
     const moneda_to = document.querySelector("#selec_to").value
     const cantidad_to = document.querySelector("#cripto_total").innerText 
 
+     
 
-
-    if (moneda_from === moneda_to){
-        error_aceptar("Las monedas tiene que ser diferentes")   
-    
-        return        
-    }
-    if (!cantidad_from ||cantidad_from == 0){
-        error_aceptar("La cantidad tiene que ser superior a 0")
-        return        
-    }
-
-    if (!cantidad_to ||cantidad_to == 0){
-        error_aceptar("Necesario calcular la tasa, clik en la calculadora")      
-        return        
-    }
-    if(cantidad_from_calculada !=cantidad_from){
-        error_aceptar("Necesario calcular la tasa. Valor de 'Q', incorrecto")      
-        return     
-    }
-
-    if(selec_to_calculada != moneda_to){
-        error_aceptar("Necesario calcular la tasa. Moneda 'to' diferente al calculo")      
-        return     
-    }
-    if(selec_from_calculada != moneda_from){
-        error_aceptar("Necesario calcular la tasa. Moneda 'from' diferente al calculo")      
-        return 
-    }
+    revision_calculo()
     
     alta_Movimiento({date:date, time:time, moneda_from:moneda_from, cantidad_from:cantidad_from, moneda_to:moneda_to, cantidad_to:cantidad_to})
     desmarcar_aceptar()
@@ -128,9 +105,9 @@ window.onload = function(){
     document.querySelector("#btn_aceptar").onclick = nuevo_Movimiento
 
     const input = document.querySelector('#quantity_from')
-    input.addEventListener('change', desmarcar_aceptar)
-    document.querySelector('#selec_from').addEventListener('change', desmarcar_aceptar)
-    document.querySelector('#selec_to').addEventListener('change', desmarcar_aceptar)
+    input.addEventListener('change', revision_calculo)
+    document.querySelector('#selec_from').addEventListener('change', revision_calculo)
+    document.querySelector('#selec_to').addEventListener('change', revision_calculo)
 
     color_head()
 }

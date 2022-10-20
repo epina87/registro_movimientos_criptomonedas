@@ -21,8 +21,8 @@ class Cambio:
             raise ModelError("Failed to establish a new connection") 
             
         resultado = r.json()
+       
         
-                     
         if r.status_code == 200:  
             self.tasa = resultado["rate"]
             horafecha = resultado["time"]

@@ -123,7 +123,7 @@ function ver_stado(){
 /* Consulta Alta Movimientos */
 
 function alta_Movimiento(dic_movimiento) {
-
+    
     peticion_alta.open("POST", "http://localhost:5000/api/v1/movimiento", true)
     peticion_alta.onload = peticion_alta_handler
     peticion_alta.onerror = function() { alert("No se ha podido completar la petición de movimientos")}
@@ -138,8 +138,11 @@ function peticion_alta_handler() {
     if (this.readyState === 4) {
         if (this.status === 201) {
 
+            
+
             consulta_peticion_todos()
             consulta_peticion_estado()
+            cerrar_alta_Movimiento()
             
             
         } else {
@@ -148,7 +151,31 @@ function peticion_alta_handler() {
     }
 }
 
+function cerrar_alta_Movimiento(){
+    clean_calc(["#cripto_coin","#cripto_total","#text_time","#text_date"])  
+    document.querySelector("#quantity_from").value = ""
+    document.querySelector("#text_time").classList.remove("inactive")
 
+
+    const btn_alta = document.querySelector("#btn_business")
+    if (btn_alta.innerHTML =='+'){
+        btn_alta.innerHTML = '-' 
+        document.querySelector("#business").classList.remove("inactive")
+        document.querySelector("#btn_aceptar").disabled=true   
+        document.querySelector("#calculate").classList.remove("inactive")  
+        document.querySelector("#quantity_from").focus();
+        
+    }
+    
+    else{
+        btn_alta.innerHTML ='+'    
+        document.querySelector("#business").classList.add("inactive")
+        document.querySelector("#btn_aceptar").disabled=false
+        
+        document.querySelector("#calculate").classList.add("inactive") 
+    }
+
+}
 
 
 /* Buscar Monedas */

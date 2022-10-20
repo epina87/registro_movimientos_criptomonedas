@@ -50,6 +50,7 @@ function combo_monedas(selec,monedas){
 }
 
 function error_aceptar(coment){
+    
     document.querySelector("#text_error").classList.remove("inactive")
     document.querySelector("#text_error").innerHTML = coment
     desmarcar_aceptar()       
@@ -66,6 +67,7 @@ function color_valor_positivo_negativo(valor,nombre_campo){
  }
 
  function desmarcar_aceptar(){
+    
     cantidad_from_calculada = 0 
     selec_to_calculada = ""
     selec_from_calculada=""
@@ -77,6 +79,47 @@ function color_valor_positivo_negativo(valor,nombre_campo){
     document.querySelector("#btn_aceptar").disabled=true
     document.querySelector("#calculate").classList.remove("inactive")
     document.querySelector("#quantity_from").focus();
+
+}
+
+
+
+
+function revision_calculo(){
+    const moneda_from = document.querySelector("#selec_from").value
+    const cantidad_from = document.querySelector("#quantity_from").value
+    const moneda_to = document.querySelector("#selec_to").value
+    const cantidad_to = document.querySelector("#cripto_total").innerText 
+
+     
+
+    if (moneda_from === moneda_to){
+        error_aceptar("Las monedas tiene que ser diferentes")       
+        return        
+    }
+    if (!cantidad_from ||cantidad_from == 0){
+        error_aceptar("La cantidad tiene que ser superior a 0")
+        return        
+    }
+
+    if (!cantidad_to ||cantidad_to == 0){
+        error_aceptar("Necesario calcular la tasa, clik en la calculadora")      
+        return        
+    }
+    if(cantidad_from_calculada !=cantidad_from){
+        error_aceptar("Necesario calcular la tasa. Valor de 'Q', incorrecto")        
+        return     
+    }
+
+    if(selec_to_calculada != moneda_to){
+        error_aceptar("Necesario calcular la tasa. Moneda 'to' diferente al calculo")      
+        return     
+    }
+    if(selec_from_calculada != moneda_from){
+        error_aceptar("Necesario calcular la tasa. Moneda 'from' diferente al calculo")      
+        return 
+    }
+
 
 }
 
