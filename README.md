@@ -23,6 +23,6 @@ ___
 ___
 
 ### 4- Modificación del fichero .env_template
-  * a) Modificar FLASK_DEBUG= _"Añadiendo True"_
+  * a) Modificar FLASK_DEBUG= _"True"_
   * b) Renombrar el fichero .env_template por .env
 ___
