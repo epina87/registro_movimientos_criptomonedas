@@ -7,12 +7,12 @@ ___
 ### 2- Creación base datos con el fichero _"/data/create.sql"._
   #### opción desde terminal. 
     
-    * sqlite3 "Nombre de la base de datos".db
-    * .read data/create.sql
-    * .q
+     sqlite3 "Nombre de la base de datos".db
+     .read data/create.sql
+     .q
 
   #### opción DB Browser SQLite (link ejemplo)
-    * https://www.asesoriaensig.com.mx/sql-basico-crear-una-base-de-datos-sqlite-y-agregar-una-tabla/
+     https://www.asesoriaensig.com.mx/sql-basico-crear-una-base-de-datos-sqlite-y-agregar-una-tabla/
 ___
 
 ### 3- Modificación del fichero config_template.py
