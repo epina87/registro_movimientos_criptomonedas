@@ -5,13 +5,13 @@
 ___        
 
 ### 2- Creación base datos con el fichero _"/data/create.sql"._
-    #### opción desde terminal. 
+  #### opción desde terminal. 
     
     * -> sqlite3 "Nombre de la base de datos".db
     * sqlite> .read data/create.sql
     * sqlite> .q
 
-    ### opción DB Browser SQLite
+  #### opción DB Browser SQLite
     * link ejemplo ->  https://www.asesoriaensig.com.mx/sql-basico-crear-una-base-de-datos-sqlite-y-agregar-una-tabla/
 ___
 
