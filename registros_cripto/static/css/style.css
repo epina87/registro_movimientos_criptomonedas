@@ -135,7 +135,7 @@ select,input,option{
 
 
 
-button{
+button  {
   background-color: rgba(135, 117, 234, 0.59) ;
   color:rgba(232, 194, 104, 0.85);
   border-radius: 7px;
@@ -147,6 +147,19 @@ button{
   font-size: 15px;
 
 }
+
+#btn_actualizar{
+  background-color: transparent;
+  background-image: url("../img/actualizar.png");
+  border-radius: 0;
+  background-repeat: no-repeat, repeat;
+  background-size: contain ;
+  width: 50px;
+  height: 50px;
+  border-radius: 5px;
+
+}
+
 #btn_business{
   width: 70px;
   height: 70px;
@@ -158,6 +171,8 @@ button{
   height: 70px;
   font-size: 25px;
 }
+
+
 
 
 #btn_aceptar{
@@ -176,9 +191,6 @@ button:hover{
   border: 2px solid #dadada;  
   box-shadow: 0 0 10px #9ecaed;
   background-color: rgba(92, 69, 227, 0.59);
-  
-  
-  
   border-radius: 0.25rem;
 }
 

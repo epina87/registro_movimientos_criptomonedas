@@ -103,6 +103,7 @@ window.onload = function(){
     document.querySelector("#btn_business").onclick = mostrar_alta_Movimiento
     document.querySelector("#calculate").onclick = revisar_Moneda
     document.querySelector("#btn_aceptar").onclick = nuevo_Movimiento
+    document.querySelector("#btn_actualizar").onclick = consulta_peticion_estado
 
     const input = document.querySelector('#quantity_from')
     input.addEventListener('change', revision_calculo)
