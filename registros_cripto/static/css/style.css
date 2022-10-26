@@ -133,6 +133,14 @@ select,input,option{
   font-family: 'Kaushan Script', cursive;
 }
 
+#erores_conexion{
+  background-color: red;
+  color: white;
+  font-size: 20px;
+  text-align: center;
+  height: 40px;
+}
+
 
 
 button  {

@@ -96,6 +96,7 @@ function nuevo_Movimiento(ev) {
 
 
 window.onload = function(){
+    
 
     consulta_peticion_todos()
     consulta_peticion_estado()

@@ -7,9 +7,13 @@
 /* Consulta Todos Movimientos */
 
 function consulta_peticion_todos(){
+    document.querySelector("#erores_conexion").classList.add("inactive")
     peticion_todo.open("GET", "http://localhost:5000/api/v1/movimientos", true)
     peticion_todo.onload = peticion_todos_handler
-    peticion_todo.onerror = function() { alert("No se ha podido completar la petición de movimientos")}
+    peticion_todo.onerror = function() { 
+        mostrar_error_conexion("No se ha podido completar la petición de movimientos")
+        //alert("No se ha podido completar la petición de movimientos")
+    }
     peticion_todo.send()
 
 }
@@ -68,10 +72,12 @@ function peticion_todos_handler() {
             
             error = los_datos.mensaje
             if (error != "") { 
-                alert(error)
+                mostrar_error_conexion(error)
+                //alert(error)
             }
             else{
-                alert("Se ha producido un error en la consulta de movimientos")
+                mostrar_error_conexion("Se ha producido un error en la consulta de movimientos")
+                //alert("Se ha producido un error en la consulta de movimientos")
             }
             
         }
@@ -84,9 +90,13 @@ function peticion_todos_handler() {
 /* Consulta Estado */
 
 function consulta_peticion_estado(){
+    document.querySelector("#erores_conexion").classList.add("inactive")
     peticion_estado.open("GET", "http://localhost:5000/api/v1/status", true)
     peticion_estado.onload = ver_stado
-    peticion_estado.onerror = function() { alert("No se ha podido completar la petición del estado")}
+    peticion_estado.onerror = function() { 
+        mostrar_error_conexion("No se ha podido completar la petición del estado")
+        alert("No se ha podido completar la petición del estado")
+    }
     peticion_estado.send()
 }
 
@@ -111,8 +121,8 @@ function ver_stado(){
     }
 
     else{
-        
-        alert("Se ha producido un error en la consulta del estado de los movimientos")
+        mostrar_error_conexion("Se ha producido un error en la consulta del estado de los movimientos")
+        //alert("Se ha producido un error en la consulta del estado de los movimientos")
     } 
             
 }
@@ -123,10 +133,14 @@ function ver_stado(){
 /* Consulta Alta Movimientos */
 
 function alta_Movimiento(dic_movimiento) {
+    document.querySelector("#erores_conexion").classList.add("inactive")
     
     peticion_alta.open("POST", "http://localhost:5000/api/v1/movimiento", true)
     peticion_alta.onload = peticion_alta_handler
-    peticion_alta.onerror = function() { alert("No se ha podido completar la petición de movimientos")}
+    peticion_alta.onerror = function() { 
+        mostrar_error_conexion("No se ha podido completar la petición de movimientos")
+        //alert("No se ha podido completar la petición de movimientos")
+    }
     peticion_alta.setRequestHeader("Content-Type", "application/json")
 
     const data_json = JSON.stringify(dic_movimiento)
@@ -146,7 +160,8 @@ function peticion_alta_handler() {
             
             
         } else {
-            alert("Se ha producido un error en el alta de movimientos")
+            mostrar_error_conexion("Se ha producido un error en el alta de movimientos")
+            //alert("Se ha producido un error en el alta de movimientos")
         }
     }
 }
@@ -181,6 +196,7 @@ function cerrar_alta_Movimiento(){
 /* Buscar Monedas */
 
 function consulta_buscar_monedas(){
+    document.querySelector("#erores_conexion").classList.add("inactive")
     const url = 'http://localhost:5000/api/v1/selec_from'
 
     peticion_selec_moneda.open("GET", url,true)
@@ -211,7 +227,8 @@ function consulta_buscar_monedas(){
 /*Revisar Monedas */
 
 function consulta_revisar_moneda(selec_from,selec_to,quantity){
-
+    
+    document.querySelector("#erores_conexion").classList.add("inactive")
     const url = 'http://localhost:5000/api/v1/selec/'+selec_from+'/'+selec_to+'/'+quantity
 
     peticion_calculo.open("GET", url,true)
@@ -302,3 +319,11 @@ function cuenta_regresiva(){
     }, 1000);
     
 }
+
+/*Error de conexión */
+function mostrar_error_conexion(coment){
+
+    document.querySelector("#erores_conexion").classList.remove("inactive")
+    document.querySelector("#erores_conexion").innerHTML = coment
+}
+
