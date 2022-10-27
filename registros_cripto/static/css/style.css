@@ -139,6 +139,9 @@ select,input,option{
   font-size: 20px;
   text-align: center;
   height: 40px;
+  position: fixed;
+  top: 50%;
+  width: 1400px;
 }
 
 
