@@ -26,3 +26,7 @@ ___
   * a) Modificar FLASK_DEBUG= _True_
   * b) Renombrar el fichero .env_template por .env
 ___
+### 5- Activar servidor flask 
+      Flask run
+
+### 6- En el navegador introducir http://"La ip del servidor virtual de flask":"El puerto de acceso"
